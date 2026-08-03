@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Real-Time Face Tracking & Emotion Analyzer</title>
+  
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Chart.js for Telemetry Timeline -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Top Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-icon">
+          <i data-lucide="scan-face"></i>
+        </div>
+        <div>
+          <h1>JHILEL FaceTrack AI <span class="badge">PRO</span></h1>
+          <p class="subtitle">Real-Time Facial Detection & 7-Emotion Analytics Engine</p>
+        </div>
+      </div>
+      
+      <div class="header-status">
+        <div class="status-indicator active" id="statusIndicator">
+          <span class="pulse-dot"></span>
+          <span id="statusText">System Ready</span>
+        </div>
+        <div class="fps-badge">
+          <i data-lucide="zap"></i>
+          <span id="fpsCounter">0 FPS</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Layout -->
+    <main class="dashboard-grid">
+      
+      <!-- Left Column: Webcam & Bounding Box Video Feed -->
+      <section class="video-section">
+        <div class="card video-card">
+          <div class="card-header">
+            <h2><i data-lucide="camera"></i> Live Video Feed</h2>
+            <div class="camera-controls">
+              <button id="toggleCamBtn" class="btn btn-primary">
+                <i data-lucide="video"></i> Start Camera
+              </button>
+              <button id="captureBtn" class="btn btn-secondary" disabled>
+                <i data-lucide="aperture"></i> Snapshot
+              </button>
+            </div>
+          </div>
+          
+          <div class="video-container" id="videoContainer">
+            <!-- Hidden Video element for webcam capture -->
+            <video id="webcam" playsinline autoplay muted></video>
+            
+            <!-- Canvas for bounding box green frame & emotion label rendering -->
+            <canvas id="outputCanvas"></canvas>
+
+            <!-- Video Placeholder when camera is off -->
+            <div class="video-placeholder" id="videoPlaceholder">
+              <div class="placeholder-content">
+                <div class="icon-circle">
+                  <i data-lucide="camera-off"></i>
+                </div>
+                <h3>Camera is Turned Off</h3>
+                <p>Click "Start Camera" to enable real-time face tracking & emotion recognition.</p>
+                <button class="btn btn-primary btn-large" id="startCamPromptBtn">
+                  <i data-lucide="power"></i> Enable Webcam
+                </button>
+              </div>
+            </div>
+
+            <!-- Face Detection Overlay HUD -->
+            <div class="hud-overlay" id="hudOverlay" style="display: none;">
+              <div class="hud-badge">
+                <span class="hud-label">Faces Tracked:</span>
+                <span id="facesCount" class="hud-value">0</span>
+              </div>
+              <div class="hud-badge">
+                <span class="hud-label">Dominant:</span>
+                <span id="dominantBadgeText" class="hud-value highlight">--</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video Settings & Controls Footer -->
+          <div class="card-footer video-controls-bar">
+            <div class="control-group">
+              <label><i data-lucide="sliders"></i> Bounding Box Overlay:</label>
+              <input type="checkbox" id="showBoxToggle" checked />
+              <span>Green Frame</span>
+            </div>
+            
+            <div class="control-group">
+              <label><i data-lucide="sparkles"></i> Facial Landmarks:</label>
+              <input type="checkbox" id="showLandmarksToggle" checked />
+              <span>Mesh Anchors</span>
+            </div>
+
+            <div class="control-group">
+              <label><i data-lucide="tag"></i> Emotion Tags:</label>
+              <input type="checkbox" id="showLabelToggle" checked />
+              <span>Live Labels</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Column: Emotion Dashboard & Analytics UI -->
+      <section class="analytics-section">
+        
+        <!-- Dominant Emotion Hero Card -->
+        <div class="card hero-emotion-card" id="heroEmotionCard">
+          <div class="hero-emotion-content">
+            <div class="emotion-emoji-box" id="dominantEmoji">😐</div>
+            <div class="emotion-details">
+              <span class="meta-title">Dominant Emotion</span>
+              <h3 id="dominantEmotionName">NEUTRAL</h3>
+              <div class="confidence-bar-wrap">
+                <span id="dominantScoreText">0.0% Confidence</span>
+                <div class="confidence-track">
+                  <div class="confidence-fill" id="dominantConfidenceFill" style="width: 0%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7 Emotion Score Bars Panel -->
+        <div class="card metrics-card">
+          <div class="card-header">
+            <h2><i data-lucide="bar-chart-3"></i> Emotion Distribution</h2>
+            <span class="live-tag"><span class="red-dot"></span> LIVE</span>
+          </div>
+          
+          <div class="emotion-bars-container">
+            
+            <!-- Surprise -->
+            <div class="emotion-row" data-emotion="surprise">
+              <div class="emotion-label-group">
+                <span class="emotion-icon">😲</span>
+                <span class="emotion-name">Surprise</span>
+              </div>
+              <div class="bar-wrapper">
+                <div class="bar-background">
+                  <div class="bar-fill" id="bar-surprise" style="width: 0%;"></div>
+                </div>
+              </div>
+              <span class="emotion-val" id="val-surprise">0%</span>
+            </div>
+
+            <!-- Angry -->
+            <div class="emotion-row" data-emotion="angry">
+              <div class="emotion-label-group">
+                <span class="emotion-icon">😡</span>
+                <span class="emotion-name">Angry</span>
+              </div>
+              <div class="bar-wrapper">
+                <div class="bar-background">
+                  <div class="bar-fill" id="bar-angry" style="width: 0%;"></div>
+                </div>
+              </div>
+              <span class="emotion-val" id="val-angry">0%</span>
+            </div>
+
+            <!-- Fear -->
+            <div class="emotion-row" data-emotion="fear">
+              <div class="emotion-label-group">
+                <span class="emotion-icon">😨</span>
+                <span class="emotion-name">Fear</span>
+              </div>
+              <div class="bar-wrapper">
+                <div class="bar-background">
+                  <div class="bar-fill" id="bar-fear" style="width: 0%;"></div>
+                </div>
+              </div>
+              <span class="emotion-val" id="val-fear">0%</span>
+            </div>
+
+            <!-- Happy -->
+            <div class="emotion-row" data-emotion="happy">
+              <div class="emotion-label-group">
+                <span class="emotion-icon">😊</span>
+                <span class="emotion-name">Happy</span>
+              </div>
+              <div class="bar-wrapper">
+                <div class="bar-background">
+                  <div class="bar-fill" id="bar-happy" style="width: 0%;"></div>
+                </div>
+              </div>
+              <span class="emotion-val" id="val-happy">0%</span>
+            </div>
+
+            <!-- Sad -->
+            <div class="emotion-row" data-emotion="sad">
+              <div class="emotion-label-group">
+                <span class="emotion-icon">😢</span>
+                <span class="emotion-name">Sad</span>
+              </div>
+              <div class="bar-wrapper">
+                <div class="bar-background">
+                  <div class="bar-fill" id="bar-sad" style="width: 0%;"></div>
+                </div>
+              </div>
+              <span class="emotion-val" id="val-sad">0%</span>
+            </div>
+
+            <!-- Neutral -->
+            <div class="emotion-row" data-emotion="neutral">
+              <div class="emotion-label-group">
+                <span class="emotion-icon">😐</span>
+                <span class="emotion-name">Neutral</span>
+              </div>
+              <div class="bar-wrapper">
+                <div class="bar-background">
+                  <div class="bar-fill" id="bar-neutral" style="width: 0%;"></div>
+                </div>
+              </div>
+              <span class="emotion-val" id="val-neutral">0%</span>
+            </div>
+
+            <!-- Disgust -->
+            <div class="emotion-row" data-emotion="disgust">
+              <div class="emotion-label-group">
+                <span class="emotion-icon">🤢</span>
+                <span class="emotion-name">Disgust</span>
+              </div>
+              <div class="bar-wrapper">
+                <div class="bar-background">
+                  <div class="bar-fill" id="bar-disgust" style="width: 0%;"></div>
+                </div>
+              </div>
+              <span class="emotion-val" id="val-disgust">0%</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Emotion History Timeline Chart -->
+        <div class="card timeline-card">
+          <div class="card-header">
+            <h2><i data-lucide="activity"></i> Emotion Telemetry Chart</h2>
+            <span class="meta-tag">Last 30 Frames</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="telemetryChart"></canvas>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- Snapshots Modal / Gallery -->
+    <div id="snapshotModal" class="modal-backdrop" style="display: none;">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3><i data-lucide="image"></i> Captured Frame Snapshot</h3>
+          <button id="closeModalBtn" class="btn-icon"><i data-lucide="x"></i></button>
+        </div>
+        <div class="modal-body">
+          <img id="snapshotImg" src="" alt="Captured Frame" />
+          <div class="snapshot-details" id="snapshotDetails">
+            <!-- Will be populated dynamically -->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a id="downloadSnapshotBtn" class="btn btn-primary" download="emotion-snapshot.png">
+            <i data-lucide="download"></i> Download Image
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- App Footer -->
+    <footer class="app-footer">
+      <p>Real-Time Face Tracking & Emotion Analytics Platform &bull; Built with MediaPipe Tasks & OpenCV Python Engine</p>
+    </footer>
+
+  </div>
+
+  <!-- MediaPipe Tasks Vision ES Module Bundle -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>

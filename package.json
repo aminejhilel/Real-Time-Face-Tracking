@@ -1,0 +1,21 @@
+{
+  "name": "real-time-face-tracking-emotion-analyzer",
+  "version": "1.0.0",
+  "description": "Real-Time Face Tracking & 7-Emotion Analyzer Application",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve . -l 3000",
+    "dev": "npx serve . -l 3000"
+  },
+  "keywords": [
+    "computer-vision",
+    "face-tracking",
+    "emotion-recognition",
+    "mediapipe",
+    "opencv",
+    "streamlit",
+    "real-time"
+  ],
+  "author": "Senior AI & Computer Vision Engineer",
+  "license": "MIT"
+}
