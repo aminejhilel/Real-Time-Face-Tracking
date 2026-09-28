@@ -76,6 +76,9 @@ The Python implementation is perfect if you want to extend the computer vision p
 - **Web Version:** HTML5, CSS3, JavaScript (ES6+), MediaPipe Tasks Vision (`@mediapipe/tasks-vision`), Chart.js, Lucide Icons.
 - **Python Version:** Python, OpenCV (`cv2`), FER (Facial Expression Recognition), Streamlit.
 
+- <img width="1280" height="883" alt="image" src="https://github.com/user-attachments/assets/9f80fc87-2099-4f07-8431-55ef95babff9" />
+
+
 ## 📝 Features Checklist
 - [x] Access system webcam stream in real time.
 - [x] Detect and track human faces in the video frame.
