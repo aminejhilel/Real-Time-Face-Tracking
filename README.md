@@ -1,3 +1,4 @@
+***********************************************
 # Real-Time Face Tracking & Emotion Analyzer
 
 A dual-architecture **Real-Time Face Tracking & Emotion Analyzer** platform. This project provides two complete implementations:
