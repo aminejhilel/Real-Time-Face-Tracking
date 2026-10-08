@@ -7,7 +7,7 @@ A dual-architecture **Real-Time Face Tracking & Emotion Analyzer** platform. Thi
 Both versions feature real-time webcam access, neon green face bounding boxes, dominant emotion badges, and a dynamic 7-emotion percentage dashboard (Surprise, Angry, Fear, Happy, Sad, Neutral, Disgust).
 
 ---
-
+*******************************************
 ## 🎨 Option 1: Web Dashboard (Recommended)
 
 The Web Dashboard uses modern Glassmorphism UI, Recharts/Chart.js telemetry, and client-side AI inference via MediaPipe. It is the fastest and most responsive option, running directly on your GPU/CPU via WebAssembly.
