@@ -38,11 +38,12 @@ The Python implementation is perfect if you want to extend the computer vision p
 ### Setup Instructions
 
 1. **Navigate to the Python App Directory:**
+2. *******************
    ```bash
    cd python_app
    ```
 
-2. **Create a Virtual Environment (Recommended):**
+3. **Create a Virtual Environment (Recommended):**
    ```bash
    python -m venv venv
    
@@ -53,18 +54,18 @@ The Python implementation is perfect if you want to extend the computer vision p
    source venv/bin/activate
    ```
 
-3. **Install Dependencies:**
+4. **Install Dependencies:**
    ```bash
    pip install -r requirements.txt
    ```
    *Note: This will install `opencv-python`, `fer`, `streamlit`, and required data science libraries.*
 
-4. **Run the Streamlit Dashboard:**
+5. **Run the Streamlit Dashboard:**
    ```bash
    streamlit run app.py
    ```
 
-5. **Usage:**
+6. **Usage:**
    - The Streamlit interface will open in your default browser.
    - In the left sidebar, check **"Start Live Webcam Stream"**.
    - Ensure the correct Camera Index (usually `0`) is selected.
