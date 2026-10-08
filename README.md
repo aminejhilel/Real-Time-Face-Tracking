@@ -53,7 +53,7 @@ The Python implementation is perfect if you want to extend the computer vision p
    # On macOS/Linux:
    source venv/bin/activate
    ```
-
+*****************************
 4. **Install Dependencies:**
    ```bash
    pip install -r requirements.txt
