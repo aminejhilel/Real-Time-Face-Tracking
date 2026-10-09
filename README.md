@@ -10,6 +10,7 @@ Both versions feature real-time webcam access, neon green face bounding boxes, d
 ---
 *******************************************
 ## 🎨 Option 1: Web Dashboard (Recommended)
+***********************--------------------
 
 The Web Dashboard uses modern Glassmorphism UI, Recharts/Chart.js telemetry, and client-side AI inference via MediaPipe. It is the fastest and most responsive option, running directly on your GPU/CPU via WebAssembly.
 
