@@ -1,5 +1,6 @@
 ***********************************************
 # Real-Time Face Tracking & Emotion Analyzer
+***********************************************
 
 A dual-architecture **Real-Time Face Tracking & Emotion Analyzer** platform. This project provides two complete implementations:
 1. **High-Performance Web Dashboard:** Runs entirely in the browser using HTML5 Canvas and MediaPipe Vision (zero backend latency).
