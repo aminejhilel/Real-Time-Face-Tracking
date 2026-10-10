@@ -7,7 +7,7 @@ A dual-architecture **Real-Time Face Tracking & Emotion Analyzer** platform. Thi
 
 Both versions feature real-time webcam access, neon green face bounding boxes, dominant emotion badges, and a dynamic 7-emotion percentage dashboard (Surprise, Angry, Fear, Happy, Sad, Neutral, Disgust).
 
----
+----------------
 *******************************************
 ## 🎨 Option 1: Web Dashboard (Recommended)
 *******************************************
