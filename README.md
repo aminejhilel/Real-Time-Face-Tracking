@@ -28,7 +28,7 @@ The Web Dashboard uses modern Glassmorphism UI, Recharts/Chart.js telemetry, and
 3. Open your browser and navigate to `http://localhost:3000`.
 4. Click **Start Camera** and grant webcam permissions to begin real-time emotion tracking!
 
---
+-
 
 ## 🐍 Option 2: Python Streamlit Application
 
